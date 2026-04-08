@@ -11,7 +11,6 @@ script = ExtResource("3_ilum1")
 item_name = "Power Cell"
 texture = ExtResource("4_y01d5")
 quantity = 1
-crafted_items = Array[Resource("res://Inventory/CraftItemResource.gd")]([])
 description = "Simple description"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_r3q5y"]
