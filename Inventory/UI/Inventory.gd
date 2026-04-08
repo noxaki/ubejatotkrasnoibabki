@@ -3,7 +3,6 @@ extends CenterContainer
 @onready var use_item_button: Button= $MarginContainer/FlowContainer/MarginContainer/MarginContainer/VBoxContainer/UseItemButton
 @onready var drop_button: Button = $MarginContainer/FlowContainer/MarginContainer/MarginContainer/VBoxContainer/DropItemContainer/DropItemButton
 @onready var drop_spin:SpinBox = $MarginContainer/FlowContainer/MarginContainer/MarginContainer/VBoxContainer/DropItemContainer/DropSpinBox
-@onready var craft_container = $MarginContainer/FlowContainer/MarginContainer/MarginContainer/VBoxContainer/ScrollContainer/FlowContainer
 @onready var title_label = $MarginContainer/FlowContainer/MarginContainer2/ColorRect/MarginContainer/ItemName
 @onready var description_label = $MarginContainer/FlowContainer/MarginContainer2/ColorRect/MarginContainer2/ItemDescription
 @onready var selected_item_texture: TextureRect = $MarginContainer2/SelectedItem
@@ -38,8 +37,6 @@ func _ready():
 func reload_items():
 	clear_ui()
 	selected_item_texture.texture = null
-	for craft_item in craft_container.get_children():
-		craft_item.queue_free()
 	for slot in slots:
 		slot.clear_slot()
 	var keys = Inventory.items.keys()
@@ -105,24 +102,13 @@ func on_slot_pressed(slot):
 		return
 	if slot.selected:
 		unselect(slot)	
-		clear_craft_items()
 	else: 
 		if selected_slot:
 			selected_slot.unselect()
-			clear_craft_items()
 		select(slot)
-		create_craft_items(slot.item)
 		
 	toggle_use_item_button()
 
-func create_craft_items(item: ItemResource):
-	for i in item.crafted_items:
-		var craft_panel = CraftItemPanel.create(i)
-		craft_container.add_child(craft_panel)
-		
-func clear_craft_items():
-	for craft_item in craft_container.get_children():
-		craft_item.queue_free()
 func toggle_use_item_button():
 	if not selected_slot or selected_slot.item.quantity <=0:
 		use_item_button.disabled = true
