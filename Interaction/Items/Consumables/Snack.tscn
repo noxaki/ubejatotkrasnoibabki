@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://snack_item_uid"]
+
+[ext_resource type="Script" path="res://Interaction/Items/CollectibleItem.gd" id="1_script"]
+[ext_resource type="Script" path="res://Inventory/ItemResource.gd" id="2_resource"]
+[ext_resource type="Texture2D" uid="uid://bocjeb5f6qvdp" path="res://Inventory/Images/A_LETTER.png" id="3_icon"]
+
+[sub_resource type="Resource" id="Resource_snack"]
+script = ExtResource("2_resource")
+item_name = "Energy Bar"
+texture = ExtResource("3_icon")
+quantity = 1
+crafted_items = Array[Resource("res://Inventory/CraftItemResource.gd")]([])
+description = "A tasty snack to keep you going."
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_snack"]
+size = Vector3(0.2, 0.05, 0.1)
+
+[node name="Snack" type="Area3D"]
+collision_layer = 8
+script = ExtResource("1_script")
+item = SubResource("Resource_snack")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_snack")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false 

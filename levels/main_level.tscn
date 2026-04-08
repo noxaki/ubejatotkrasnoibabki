@@ -1,0 +1,392 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/main_level.gd" id="1_main_lvl"]
+[ext_resource type="PackedScene" path="res://Interaction/Door/Door.tscn" id="3_door_scene"]
+[ext_resource type="Script" path="res://Interaction/Items/Lantern/LanternPickup.gd" id="3_ggk2x"]
+[ext_resource type="PackedScene" path="res://Interaction/Items/Key/Key.tscn" id="4_key_scene"]
+[ext_resource type="PackedScene" path="res://Interaction/Items/PowerCell/power_cell.tscn" id="5_battery_scene"]
+[ext_resource type="PackedScene" path="res://DemoPlayer/demo_player.tscn" id="6_player_scene"]
+[ext_resource type="PackedScene" path="res://Entities/Monster/Monster.tscn" id="7_monster_scene"]
+[ext_resource type="PackedScene" path="res://Interaction/Items/Lantern/LanternPickup.tscn" id="8_lantern_pickup"]
+[ext_resource type="Script" path="res://Entities/Monster/Monster.gd" id="9_5br84"]
+[ext_resource type="PackedScene" path="res://Interaction/Furniture/furniture.tscn" id="9_furniture_scene"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_night"]
+sky_top_color = Color(0.1, 0.1, 0.2, 1)
+sky_horizon_color = Color(0.2, 0.2, 0.3, 1)
+ground_bottom_color = Color(0.1, 0.1, 0.15, 1)
+ground_horizon_color = Color(0.2, 0.2, 0.3, 1)
+
+[sub_resource type="Sky" id="Sky_night"]
+sky_material = SubResource("ProceduralSkyMaterial_night")
+
+[sub_resource type="Environment" id="Environment_dark"]
+background_mode = 2
+sky = SubResource("Sky_night")
+ambient_light_source = 2
+ambient_light_color = Color(0.1, 0.1, 0.15, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = false
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_arlwx"]
+agent_height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wall"]
+albedo_color = Color(0.6, 0.55, 0.5, 1)
+roughness = 1.0
+specular_mode = 2
+metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+roughness = 1.0
+specular_mode = 2
+metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_stairs"]
+albedo_color = Color(0.4, 0.2, 0.1, 1)
+
+[node name="GiantHouse" type="Node3D" unique_id=319273048]
+script = ExtResource("1_main_lvl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=483091203]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 12.8824, 0)
+light_energy = 0.05
+shadow_enabled = true
+sky_mode = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1743546583]
+environment = SubResource("Environment_dark")
+
+[node name="DemoPlayer" type="CharacterBody3D" parent="." unique_id=935602035 groups=["Player"] instance=ExtResource("6_player_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 45)
+
+[node name="Lights" type="Node3D" parent="." unique_id=568136654]
+
+[node name="DimLight1" type="OmniLight3D" parent="Lights" unique_id=1966281616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 25)
+light_color = Color(0.8, 0.2, 0.2, 1)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="DimLight2" type="OmniLight3D" parent="Lights" unique_id=805414758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 8, 30)
+light_color = Color(0.4, 0.5, 0.6, 1)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="GroundHallLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+light_color = Color(1, 0.95, 0.9, 1)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="GroundRoom1Light" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 3, -25)
+light_color = Color(1, 0.9, 0.8, 1)
+light_energy = 0.6
+omni_range = 20.0
+
+[node name="GroundRoom2Light" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3, -25)
+light_color = Color(0.9, 1, 0.9, 1)
+light_energy = 0.6
+omni_range = 20.0
+
+[node name="GroundRoom3Light" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3, 25)
+light_color = Color(0.8, 0.9, 1, 1)
+light_energy = 0.6
+omni_range = 20.0
+
+[node name="UpperHallLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+light_color = Color(1, 0.95, 0.9, 1)
+light_energy = 0.7
+omni_range = 25.0
+
+[node name="UpperRoom1Light" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 13, -25)
+light_color = Color(1, 0.8, 0.8, 1)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="UpperRoom2Light" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 13, -25)
+light_color = Color(0.8, 1, 0.8, 1)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="UpperRoom3Light" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 13, 25)
+light_color = Color(0.8, 0.8, 1, 1)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="StairLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 8, 30)
+light_color = Color(1, 1, 0.9, 1)
+light_energy = 1.0
+omni_range = 25.0
+
+
+[node name="Light_G_Corner1" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 4, -45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_G_Corner2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 4, -45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_G_Corner3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 4, 45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_G_Corner4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 4, 45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_U_Corner1" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 14, -45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_U_Corner2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 14, -45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_U_Corner3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 14, 45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_U_Corner4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45, 14, 45)
+light_energy = 0.5
+omni_range = 15.0
+
+[node name="Light_Hall_Long1" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -25)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="Light_Hall_Long2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 25)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="Light_Hall_Long3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 4, 0)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="Light_Hall_Long4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 4, 0)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="Light_Monster_Room" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 4, 40)
+light_color = Color(1, 0, 0, 1)
+light_energy = 1.0
+omni_range = 15.0
+
+[node name="FloodLight_G1" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4, 15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="FloodLight_G2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="FloodLight_G3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4, -15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="FloodLight_G4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, -15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="FloodLight_U1" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 14, 15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="FloodLight_U2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 14, 15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="FloodLight_U3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 14, -15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="FloodLight_U4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 14, -15)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="Ambient_G_Center" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+light_energy = 0.8
+omni_range = 35.0
+
+[node name="Ambient_U_Center" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 0)
+light_energy = 0.8
+omni_range = 35.0
+
+[node name="Items" type="Node3D" parent="." unique_id=1677118823]
+
+[node name="LanternPickup" type="Area3D" parent="Items" unique_id=1947882866 instance=ExtResource("8_lantern_pickup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 40)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_ggk2x")
+
+[node name="Furniture_Hall" type="Node3D" parent="Items" unique_id=358618798 instance=ExtResource("9_furniture_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0.5, 30)
+
+[node name="Furniture_Living" type="Node3D" parent="Items" unique_id=700669749 instance=ExtResource("9_furniture_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0.5, 20)
+
+[node name="Key" type="Area3D" parent="Items" unique_id=1771970403 instance=ExtResource("4_key_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1.5, 20)
+collision_layer = 8
+
+[node name="Battery1" type="Area3D" parent="Items" unique_id=1426612223 instance=ExtResource("5_battery_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.2, 10)
+collision_layer = 8
+
+[node name="Battery2" type="Area3D" parent="Items" unique_id=382106853 instance=ExtResource("5_battery_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 11.2, -10)
+collision_layer = 8
+
+[node name="Door1" type="Area3D" parent="Items" unique_id=1455037388 instance=ExtResource("3_door_scene")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.5, 0)
+collision_layer = 8
+
+[node name="DoorMonsterRoom" type="Area3D" parent="Items" unique_id=182302357 instance=ExtResource("3_door_scene")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 10.5, -30)
+collision_layer = 8
+
+[node name="Monster" type="CharacterBody3D" parent="." unique_id=1072172656 instance=ExtResource("7_monster_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 35)
+script = ExtResource("9_5br84")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=2010403857]
+navigation_mesh = SubResource("NavigationMesh_arlwx")
+
+[node name="HouseCSG" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=1297707699]
+use_collision = true
+
+[node name="MainBlock" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1542326239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+size = Vector3(100, 20, 100)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="GroundFloorHollow" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1803056543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+operation = 2
+size = Vector3(98, 9, 98)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="UpperFloorHollow" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1464786483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+operation = 2
+size = Vector3(98, 9, 98)
+material = SubResource("StandardMaterial3D_floor")
+
+[node name="Wall0" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=129678366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+size = Vector3(98, 9, 2)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="Wall1" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1432056072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 5, 20)
+size = Vector3(2, 9, 40)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="Wall2" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=89076314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 5, -20)
+size = Vector3(2, 9, 40)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="Wall3" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=616708552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 25)
+size = Vector3(40, 9, 2)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="Wall4" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=290909773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+size = Vector3(98, 9, 2)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="Wall5" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1995250505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 20)
+size = Vector3(2, 9, 40)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="Wall6" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=769003157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, -30)
+size = Vector3(40, 9, 2)
+material = SubResource("StandardMaterial3D_wall")
+
+[node name="DoorCutout0" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1455685261]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+operation = 2
+size = Vector3(3, 6, 4)
+
+[node name="DoorCutout1" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1398269672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 3.5, 20)
+operation = 2
+size = Vector3(4, 6, 3)
+
+[node name="DoorCutout2" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=2015489081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 3.5, -20)
+operation = 2
+size = Vector3(4, 6, 3)
+
+[node name="DoorCutout3" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=57397788]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 25)
+operation = 2
+size = Vector3(3, 6, 4)
+
+[node name="DoorCutout4" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=882158932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.5, 0)
+operation = 2
+size = Vector3(3, 6, 4)
+
+[node name="DoorCutout5" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1458714001]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.5, 20)
+operation = 2
+size = Vector3(4, 6, 3)
+
+[node name="DoorCutout6" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1674135325]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.5, -30)
+operation = 2
+size = Vector3(3, 6, 4)
+
+[node name="StairwellHole" type="CSGBox3D" parent="NavigationRegion3D/HouseCSG" unique_id=1716184507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 10, 30)
+operation = 2
+size = Vector3(10, 10, 15)
+
+[node name="Stairs" type="CSGPolygon3D" parent="NavigationRegion3D/HouseCSG" unique_id=525869891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0.5, 35)
+polygon = PackedVector2Array(0, 0, 0, 10, 15, 10, 15, 0)
+mode = 1
+spin_degrees = 360.0
+spin_sides = 8
+material = SubResource("StandardMaterial3D_stairs")
